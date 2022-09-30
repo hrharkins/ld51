@@ -1,0 +1,21 @@
+version: "3.5"
+
+services:
+    www:
+        build:
+            context: "./www/"
+            target: "node-dev"
+        volumes:
+            # NOTE: These first few are r/w to allow npm install to work.
+            - "${WORKSPACE:-.}/www/package.json:/opt/ld51/www/package.json"
+            - "${WORKSPACE:-.}/www/package-lock.json:/opt/ld51/www/package-lock.json"
+            - "${WORKSPACE:-.}/www/webpack.config.js:/opt/ld51/www/webpack.config.js:ro"
+            - "${WORKSPACE:-.}/www/babelrc.json:/opt/ld51/www/.babelrc:ro"
+            - "${WORKSPACE:-.}/www/src/:/opt/ld51/www/src:ro"
+            - "${WORKSPACE:-.}/www/dist/:/opt/ld51/www/dist"
+            - "${WORKSPACE:-.}/www/public/:/opt/ld51/www/public/:ro"
+            - "${WORKSPACE:-.}/www/static/:/opt/ld51/www/static/:ro"
+        command: [ "npm", "run", "dev-server" ]
+        ports:
+            - "9000:9000"
+            

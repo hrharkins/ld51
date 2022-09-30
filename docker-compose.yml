@@ -1,0 +1,7 @@
+version: "3.5"
+
+services:
+    www:
+        build:
+            context: www/
+            target: node-dev
